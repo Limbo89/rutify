@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 const PORT = 3000;
+const User = require('./routes/user');
 const njk = require('nunjucks');
 const mongoose = require('mongoose');
 
@@ -12,18 +13,52 @@ njk.configure('templates', {
 
 app.use(express.urlencoded({ extended: true }));
 
+function randKey() {
+    let abc = "qwertyuiop[]\asdfghjkl;'zxcvbnm,./!@#$%^&*()_+1234567890-=`~*";
+    let rs = "";
+    while (rs.length < 100) {
+        rs += abc[Math.floor(Math.random() * abc.length)];
+    };
+    return rs;
+};
+
 app.use(
     session({
-        secret: 'aboba',
+        secret: randKey(),
         resave: true,
         saveUninitialized: true,
     })
 );
 
 app.get('/', (req, res) => {
-    res.send("<h1>Rutify</h1>");
+    if (session.user) {
+        res.render("index.njk");
+    } else {
+        res.redirect("/login");
+    }
+});
+app.get("/registration", (req, res) => {
+    res.render("registration.njk");
+});
+app.get("/login", (req, res) => {
+    res.render("login.njk");
+});
+app.use('/user', User);
+// app.use('/playlist', Playlist);
+app.use((req, res) => {
+    res.sendStatus("404");
 });
 
-app.listen(PORT, (req, res) => {
-    console.log(`Server started on the link http://localhost:${PORT}`);
+mongoose.connect("mongodb://localhost:27017/rutify", { useUnifiedTopology: true }, (err) => {
+    if (!err) {
+        app.listen(PORT, (err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(`Server's started on http://localhost:${PORT}`);
+            }
+        });
+    } else {
+        console.log(err + "Ошибка в подключении к базе данных");
+    }
 });

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Авторизация</title>
+        <style>
+            .red {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Авторизация</h1>
+        <form action="/user/authorization" method="post">
+            <p>Логин</p>
+            <input placeholder="введите ваш логин" name="username" type="text" required>
+            <br>
+            <p>Пароль</p>
+            <input placeholder="введите ваш пароль" name="password" type="password" required><br>
+            <p class="red">{{ status }}</p>
+            <h4>Когда-нибудь здесь появится капча</h4>
+            <button type="submit">Войти</button>
+            <p>У вас нет аккаунта? <a href="/registration">Зарегестрируйтесь!</a>
+            </p>
+        </form>
+    </body>
+</html>

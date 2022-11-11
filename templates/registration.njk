@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Регистрация</title>
+        <style>
+            .red {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Регистрация</h1>
+        <form action="/user/registration" method="post">
+            <p>Логин</p>
+            <input name="username" placeholder="Введите имя пользователя" type="text" required>
+            <br>
+            <p>Пароль</p>
+            <input name="password" placeholder="Введите пароль" type="password" required><br>
+            <p>Подтверждение пароля</p>
+            <input name="passwordConfirm" placeholder="Подтверждение пароля" type="password" required><br>
+            <p class="red">{{ status }}</p>
+            <button type="submit">Зарегестрироваться!</button>
+            <p>У вас уже есть аккаунт? <a href="/login">Вход в аккаунт</a>
+            </p>
+        </form>
+    </body>
+</html>
