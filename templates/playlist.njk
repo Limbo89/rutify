@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Плейлист</title>
+        <style>
+            .red {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <a class="red" href="">Удалить плейлист</a>
+        {% for track in data %}
+            <hr>
+            <div>
+                <p>{{track.composition}}</p>
+                <img src="/{{track.avatar}}" alt="404">
+                <audio controls>
+                    <source src="/{{track.track}}">
+                </audio>
+                <p>{{track.composer}}</p>
+                <a class="red" href="/music/playlist/{{id}}/deleteTrack/{{track._id}}">Удалить композицию</a>
+            </div>
+        {% endfor %}
+    </body>
+</html>

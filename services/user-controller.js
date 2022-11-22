@@ -7,7 +7,7 @@ class UserController {
     }
 
     async logout(req, res) {
-        delete session.user;
+        delete req.session.user;
         console.log('Пользователь успешно вышел из аккаунта!');
         res.redirect("/login");
     }
@@ -40,10 +40,11 @@ class UserController {
                 res.render("login.njk", { status: "Пользователя с таким логином не существует!" });
             } else {
                 if (result.password == req.body.password) {
-                    session.user = {
+                    req.session.user = {
                         auth: true,
                         name: result.username,
                     }
+                    console.log('Пользователь успешно авторизован!');
                     res.redirect("/");
                 } else {
                     res.render("login.njk", { status: "Неверный пароль!" });

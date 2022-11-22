@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const CompositionsScheme = new Schema({
     avatar: String,
     composer: String,
-    compositions: String,
+    composition: String,
     track: String,
 });
 

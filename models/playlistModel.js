@@ -7,6 +7,7 @@ const PlaylistScheme = new Schema({
     description: String,
     author: String,
     avatar: String,
+    compositions: Array,
 });
 
 module.exports = mongoose.model("Playlist", PlaylistScheme);

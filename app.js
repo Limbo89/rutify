@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 const PORT = 3000;
+const Music = require("./routes/music");
 const User = require('./routes/user');
 const njk = require('nunjucks');
 const mongoose = require('mongoose');
@@ -12,6 +13,7 @@ njk.configure('templates', {
 });
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('static'));
 
 function randKey() {
     let abc = "qwertyuiop[]\asdfghjkl;'zxcvbnm,./!@#$%^&*()_+1234567890-=`~*";
@@ -29,14 +31,6 @@ app.use(
         saveUninitialized: true,
     })
 );
-
-app.get('/', (req, res) => {
-    if (session.user) {
-        res.render("index.njk");
-    } else {
-        res.redirect("/login");
-    }
-});
 app.get("/registration", (req, res) => {
     res.render("registration.njk");
 });
@@ -44,10 +38,20 @@ app.get("/login", (req, res) => {
     res.render("login.njk");
 });
 app.use('/user', User);
-// app.use('/playlist', Playlist);
-app.use((req, res) => {
-    res.sendStatus("404");
+app.use((req, res, next)=> {
+    if(req.session.user){
+        next()
+    } else {
+        res.redirect("/login");
+    }
 });
+app.get('/', (req, res) => {
+    res.redirect("/music");
+});
+app.use('/music', Music);
+// app.use((req, res) => {
+//     res.sendStatus("404");
+// });
 
 mongoose.connect("mongodb://localhost:27017/rutify", { useUnifiedTopology: true }, (err) => {
     if (!err) {

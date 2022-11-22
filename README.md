@@ -1,7 +1,7 @@
 =============================================================================================================================================
 Список всех роутов:
 =============================================================================================================================================
-GET: /, /login, /registration, /user/logout, /home, /playlist/createPlaylist, /playlist/:id, playlist/updatePlaylist/:id
+GET: /, /login, /registration, /user/logout, || /playlist/create, /playlist/:id, /playlist/update/:id
 =============================================================================================================================================
-POST: /user/registration, /user/auth, /playlist/createPlaylist, /playlist/updatePlaylist/:id, /playlist/deletePlaylist/:id
+POST: /user/registration, /user/auth, || /playlist/create, /playlist/update/:id, /playlist/delete/:id
 =============================================================================================================================================
