@@ -10,8 +10,16 @@
         <h1>Плеер</h1>
         <a href="/music/playlistCreate">Создать плейлист</a>
         <h1>Плейлисты пользователя</h1>
+        {% for playlist in dataTemplate.userPlaylists %}
+            <div>
+                <h3>{{ playlist.name }}</h3>
+                <a href="/music/playlist/{{playlist._id}}">
+                    <img src="{{playlist.avatar}}" alt="404">
+                </a>
+            </div>
+        {% endfor %}
         <h1>Классические плейлисты</h1>
-        {% for playlist in playlists %}
+        {% for playlist in dataTemplate.systemPlaylists %}
             <div>
                 <h3>{{ playlist.name }}</h3>
                 <a href="/music/playlist/{{playlist._id}}">

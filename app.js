@@ -4,6 +4,7 @@ const session = require('express-session');
 const PORT = 3000;
 const Music = require("./routes/music");
 const User = require('./routes/user');
+const fileUpload = require('express-fileupload');
 const njk = require('nunjucks');
 const mongoose = require('mongoose');
 
@@ -12,6 +13,7 @@ njk.configure('templates', {
     express: app
 });
 
+app.use(fileUpload({}));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('static'));
 
@@ -38,8 +40,8 @@ app.get("/login", (req, res) => {
     res.render("login.njk");
 });
 app.use('/user', User);
-app.use((req, res, next)=> {
-    if(req.session.user){
+app.use((req, res, next) => {
+    if (req.session.user) {
         next()
     } else {
         res.redirect("/login");

@@ -7,14 +7,27 @@
         <title>Создание плейлиста</title>
     </head>
     <body>
-        <form action="/music/playlistCreate" method="post">
+        <form action="/music/playlistCreate" method="post" enctype="multipart/form-data">
             <label for="avatar">Обложка</label>
-            <input name="avatar" type="file" required> <br>
+            <input name="avatar" type="file">
+            <br>
             <label for="name">Название</label>
             <input name="name" type="text" required><br>
             <label for="description">Описание</label>
             <input name="description" type="text" required><br>
             <button type="submit">Создать</button>
+            {% for track in data %}
+                <div>
+                    <p>{{track.composition}}</p>
+                    <img src="/{{track.avatar}}" alt="404">
+                    <audio controls>
+                        <source src="/{{track.track}}">
+                    </audio>
+                    <p>{{track.composer}}</p>
+                    <span>Добавить</span><input type="checkbox" name="tracks" value="{{track._id}}">
+                </div>
+            {% endfor %}
         </form>
+
     </body>
 </html>
