@@ -13,7 +13,13 @@
     </head>
     <body>
         {% if permission %}
-            <a class="red" href="">Удалить плейлист</a>
+            <form action="/music/playlistDelete" method="post">
+                <input type="hidden" value="{{id}}" name="idPlaylist">
+                <button type="submit">Удалить плейлист</button>
+            </form>
+            <form action="" method="get">
+                <button type="submit"></button>
+            </form>
         {% endif %}
         {% for track in data %}
             <hr>
@@ -25,7 +31,11 @@
                 </audio>
                 <p>{{track.composer}}</p>
                 {% if permission %}
-                    <a class="red" href="/music/playlist/{{id}}/deleteTrack/{{track._id}}">Удалить композицию</a>
+                    <form action="/music/playlist/playlistTrack/delete" method="post">
+                        <input type="hidden" value="{{id}}" name="idPlaylist">
+                        <input type="hidden" value="{{track._id}}" name="idTrack">
+                        <button type="submit">удалить композицию</button>
+                    </form>
                 {% endif %}
             </div>
         {% endfor %}

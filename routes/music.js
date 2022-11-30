@@ -10,8 +10,8 @@ class Music {
         Router.get("/playlistCreate", this.getCreatePlaylist);
         Router.get("/playlist/:id", this.viewPlaylist);
         Router.get("/playlistUpdate/:id",);
-        Router.get("/playlist/:idPlaylist/deleteTrack/:idTrack", this.deleteTrackInPlaylist);
-        Router.post("/playlistDelete/:id",);
+        Router.post("/playlist/playlistTrack/delete", this.deleteTrackInPlaylist);
+        Router.post("/playlistDelete", this.playlistDelete);
         Router.post("/playlistCreate", this.postCreatePlaylist);
     }
     async main(req, res) {
@@ -28,6 +28,9 @@ class Music {
     }
     async postCreatePlaylist(req, res) {
         MusicController.postCreatePlaylist(req, res);
+    }
+    async playlistDelete(req, res) {
+        MusicController.playlistDelete(req, res);
     }
 }
 

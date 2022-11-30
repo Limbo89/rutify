@@ -31,8 +31,8 @@ class MusicController {
         })
     }
     async deleteTrack(req, res) {
-        let idPlaylist = req.params.idPlaylist;
-        let idTrack = req.params.idTrack;
+        let idPlaylist = req.body.idPlaylist;
+        let idTrack = req.body.idTrack;
         Playlist.updateOne({ _id: idPlaylist }, {
             $pullAll: {
                 compositions: [idTrack],
@@ -43,6 +43,17 @@ class MusicController {
             } else {
                 res.send(err);
                 console.log(err);
+            }
+        });
+    }
+    async playlistDelete(req, res) {
+        let playlistId = req.body.idPlaylist;
+        Playlist.deleteOne({ _id: playlistId }, (err) => {
+            if (!err) {
+                res.redirect("/music");
+            } else {
+                console.log(err);
+                res.send(err);
             }
         });
     }
