@@ -40,10 +40,11 @@ class UserController {
                 res.render("login.njk", { status: "Пользователя с таким логином не существует!" });
             } else {
                 if (result.password == req.body.password) {
-                    req.session.user = {
+                    req.session.cookie.user = {
                         auth: true,
-                        name: result.username,
+                        name: result.username
                     }
+                    console.log(req.session);
                     console.log('Пользователь успешно авторизован!');
                     res.redirect("/");
                 } else {
