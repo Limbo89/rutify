@@ -1,7 +1,6 @@
 const { render } = require("nunjucks");
 const Playlist = require("../models/playlistModel");
 const Compositions = require("../models/compositionsModel");
-const session = require('express-session');
 
 class MusicController {
     constructor() {
@@ -105,11 +104,12 @@ class MusicController {
         } else {
             avatarPath = "media/avatars/default.png";
         }
+        let _status = req.body.status;
         let _name = req.body.name;
         let _description = req.body.description;
         let _compositions = req.body.tracks;
         let _author = req.session.user.name;
-        const playlist = new Playlist({ author: _author, avatar: avatarPath, description: _description, name: _name, compositions: _compositions });
+        const playlist = new Playlist({ author: _author, avatar: avatarPath, description: _description, name: _name, compositions: _compositions, private: _status});
         playlist.save(function (err) {
             if (err) {
                 return console.log(err);

@@ -1,13 +1,12 @@
 const { render } = require("nunjucks");
 const User = require("../models/userModel");
-const session = require('express-session');
 
 class UserController {
     constructor() {
     }
 
     async logout(req, res) {
-        delete req.session.user;
+        req.session.destroy;
         console.log('Пользователь успешно вышел из аккаунта!');
         res.redirect("/login");
     }
@@ -40,11 +39,10 @@ class UserController {
                 res.render("login.njk", { status: "Пользователя с таким логином не существует!" });
             } else {
                 if (result.password == req.body.password) {
-                    req.session.cookie.user = {
+                    req.session.user = {
                         auth: true,
                         name: result.username
                     }
-                    console.log(req.session);
                     console.log('Пользователь успешно авторизован!');
                     res.redirect("/");
                 } else {

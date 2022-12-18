@@ -10,6 +10,11 @@
         <form action="/music/playlistCreate" method="post" enctype="multipart/form-data">
             <label for="avatar">Обложка</label>
             <input name="avatar" type="file">
+            
+            <p>Приватный</p>
+            <input name="status" value="true" type="radio">
+            <p>Открытый</p>
+            <input name="status" value="false" type="radio">
             <br>
             <label for="name">Название</label>
             <input name="name" type="text" required><br>

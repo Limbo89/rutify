@@ -14,7 +14,6 @@ const redis = require('redis');
 const client = redis.createClient({
     legacyMode: true
 });
-const auth = require("./scripts/authCheck");
 
 njk.configure('templates', {
     autoescape: true,
@@ -22,7 +21,7 @@ njk.configure('templates', {
 });
 
 function randKey() {
-    let abc = "qwertyuiop[]\asdfghjkl;'zxcvbnm,./!@#$%^&*()_+1234567890-=`~*";
+    let abc = "qwertyuiop[]asdfghjkl;'zxcvbnm,.!@#$%^&*()_+1234567890-=`~*";
     let rs = "";
     while (rs.length < 100) {
         rs += abc[Math.floor(Math.random() * abc.length)];
@@ -46,13 +45,25 @@ app.use(
         cookie: {
             maxAge: oneDay
         },
-        resave: false,
+        resave: true,
     })
 );
 app.use(cookieParser());
+app.use((req, res, next) => {
+    console.log(req.session);
+    let unauth = ['/', '/login', '/registration', '/user/authorization']
+    let sess = req.session;
+    if (!unauth.includes(req.url) && sess.user) {
+        next()
+    } else if (unauth.includes(req.url)) {
+        next()
+    }    
+    else {
+        res.redirect("/login");
+    }
+});
 app.get('/', (req, res) => {
-    auth(req, res);
-    res.send("Hello!");
+    res.redirect("/music/");
 });
 app.use('/user', User);
 app.get("/registration", (req, res) => {
