@@ -50,7 +50,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use((req, res, next) => {
-    console.log(req.session);
+    // console.log(req.session);
     let unauth = ['/', '/login', '/registration', '/user/authorization']
     let sess = req.session;
     if (!unauth.includes(req.url) && sess.user) {
@@ -75,7 +75,7 @@ app.get("/login", (req, res) => {
 app.use('/music', Music);
 
 mongoose.set('strictQuery', false);
-mongoose.connect("mongodb://localhost:27017/rutify", { useUnifiedTopology: true }, (err) => {
+mongoose.connect("mongodb://192.168.50.40:27017/rutify", { useUnifiedTopology: true }, (err) => {
     if (!err) {
         client.connect();
         app.listen(3000, (err) => {

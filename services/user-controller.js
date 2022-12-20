@@ -7,13 +7,13 @@ class UserController {
 
     async logout(req, res) {
         req.session.destroy;
-        console.log('Пользователь успешно вышел из аккаунта!');
+        // console.log('Пользователь успешно вышел из аккаунта!');
         res.redirect("/login");
     }
 
     async addUser(req, res) {
         User.findOne({ username: req.body.username }, function (err, result) {
-            console.log(result);
+            // console.log(result);
             if (result === null) {
                 if (req.body.password === req.body.passwordConfirm) {
                     const user = new User({ username: req.body.username, password: req.body.password });
@@ -21,7 +21,7 @@ class UserController {
                         if (err) {
                             return console.log(err);
                         }
-                        console.log('Пользователь успешно создан!');
+                        // console.log('Пользователь успешно создан!');
                         res.redirect("/login");
                     });
                 } else {
@@ -43,7 +43,7 @@ class UserController {
                         auth: true,
                         name: result.username
                     }
-                    console.log('Пользователь успешно авторизован!');
+                    // console.log('Пользователь успешно авторизован!');
                     res.redirect("/");
                 } else {
                     res.render("login.njk", { status: "Неверный пароль!" });

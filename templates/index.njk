@@ -4,12 +4,22 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../static/styles/main.css">
         <title>Главная страница</title>
     </head>
     <body>
         <h1>Плеер</h1>
         <a href="/music/playlistCreate">Создать плейлист</a>
-        <h1>Плейлисты пользователя</h1>
+        <h1>Плейлисты ваших друзей</h1>
+        {% for playlist in dataTemplate.viewerPlaylists %}
+            <div>
+                <h3>{{ playlist.name }}</h3>
+                <a href="/music/playlist/{{playlist._id}}">
+                    <img src="/{{playlist.avatar}}" alt="404">
+                </a>
+            </div>
+        {% endfor %}
+        <h1>Ваши плейлисты</h1>
         {% for playlist in dataTemplate.userPlaylists %}
             <div>
                 <h3>{{ playlist.name }}</h3>

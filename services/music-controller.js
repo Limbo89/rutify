@@ -9,19 +9,25 @@ class MusicController {
     async mainPage(req, res) {
         Playlist.find({ author: "system" }, (err, resultSystem) => {
             let dataTemplate;
+            let sess = req.session;
             if (!err) {
                 Playlist.find({ author: req.session.user.name }, (err, resultUser) => {
-                    if (!resultUser) {
-                        dataTemplate = {
-                            "systemPlaylists": resultSystem,
-                        };
-                    } else {
-                        dataTemplate = {
-                            "systemPlaylists": resultSystem,
-                            "userPlaylists": resultUser,
-                        };
-                    }
-                    res.render("index.njk", { dataTemplate });
+                    Playlist.findOne({ viewer: sess.user.name }, (err, resultViewer) => {
+                        // console.log(resultViewer);
+                        if (!resultUser) {
+                            dataTemplate = {
+                                "systemPlaylists": resultSystem,
+                            };
+                        } else {
+                            dataTemplate = {
+                                "systemPlaylists": resultSystem,
+                                "userPlaylists": resultUser,
+                                "viewerPlaylists": [resultViewer],
+                            };
+                        }
+                        console.log(dataTemplate, 1);
+                        res.render("index.njk", { dataTemplate:dataTemplate });
+                    });
                 });
             } else {
                 console.log(err);
@@ -57,6 +63,8 @@ class MusicController {
         });
     }
     async getPlaylist(req, res) {
+        let sess = req.session;
+        let user = sess.user.name;
         Playlist.findOne({ _id: req.params.id }, (err, result) => {
             if (!err) {
                 let allCompositionsInPlaylist = result.compositions;
@@ -66,13 +74,15 @@ class MusicController {
                     }
                 }, (err, rows) => {
                     if (!err) {
-                        let permission; // Разрешение на редактирование плейлиста
-                        if (result.author == "system") {
-                            permission = false;
-                        } else {
-                            permission = true;
+                        if (user == result.author || result.viewer.includes(user)) {
+                            let permission; // Разрешение на редактирование плейлиста
+                            if (result.author == "system" || user !== result.author) {
+                                permission = false;
+                            } else {
+                                permission = true;
+                            }
+                            res.render("playlist.njk", { data: rows, id: req.params.id, permission });
                         }
-                        res.render("playlist.njk", { data: rows, id: req.params.id, permission });
                     } else {
                         console.log(err);
                         res.send(err);
@@ -109,12 +119,11 @@ class MusicController {
         let _description = req.body.description;
         let _compositions = req.body.tracks;
         let _author = req.session.user.name;
-        const playlist = new Playlist({ author: _author, avatar: avatarPath, description: _description, name: _name, compositions: _compositions, private: _status});
+        const playlist = new Playlist({ author: _author, avatar: avatarPath, description: _description, name: _name, compositions: _compositions, private: _status });
         playlist.save(function (err) {
             if (err) {
                 return console.log(err);
             }
-            console.log('Плейлист успешно создан!');
             res.redirect("/music");
         });
     }
