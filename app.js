@@ -31,6 +31,7 @@ function randKey() {
 
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload({}));
+app.use(express.static("static/styles"));
 app.use(express.static('static'));
 app.use(
     session({

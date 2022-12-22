@@ -4,18 +4,19 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
         <title>Создание плейлиста</title>
     </head>
     <body>
         <form action="/music/playlistCreate" method="post" enctype="multipart/form-data">
             <label for="avatar">Обложка</label>
             <input name="avatar" type="file">
-            
-            <p>Приватный</p>
+            {# <p>Приватный</p>
             <input name="status" value="true" type="radio">
             <p>Открытый</p>
             <input name="status" value="false" type="radio">
-            <br>
+            <br> #}
             <label for="name">Название</label>
             <input name="name" type="text" required><br>
             <label for="description">Описание</label>

@@ -4,26 +4,28 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/styles/main.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
         <title>Авторизация</title>
-        <style>
-            .red {
-                color: red;
-            }
-        </style>
     </head>
     <body>
-        <h1>Авторизация</h1>
-        <form action="/user/authorization" method="post">
-            <p>Логин</p>
-            <input placeholder="введите ваш логин" name="username" type="text" required>
-            <br>
-            <p>Пароль</p>
-            <input placeholder="введите ваш пароль" name="password" type="password" required><br>
-            <p class="red">{{ status }}</p>
-            <h4>Когда-нибудь здесь появится капча</h4>
-            <button type="submit">Войти</button>
-            <p>У вас нет аккаунта? <a href="/registration">Зарегестрируйтесь!</a>
-            </p>
-        </form>
+        <div class="container">
+            <div class="window">
+                <h1 class="big_text">Вход</h1>
+                <form action="/user/authorization" method="post">
+                    <label class="small_text" for="username">Логин</label>
+                    <input class="text_input" placeholder="введите ваш логин" name="username" type="text" required>
+                    <br>
+                    <label class="small_text" for="password">Пароль</label>
+                    <input class="text_input" placeholder="введите ваш пароль" name="password" type="password" required><br>
+                    <p class="red">{{ status }}</p>
+                    <button type="submit">Войти</button>
+                    <p class="small_text">У вас нет аккаунта? <b>
+                            <a href="/registration">Зарегестрируйтесь!</a>
+                        </b>
+                    </p>
+                </form>
+            </div>
+        </div>
     </body>
 </html>

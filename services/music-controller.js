@@ -19,14 +19,20 @@ class MusicController {
                                 "systemPlaylists": resultSystem,
                             };
                         } else {
-                            dataTemplate = {
-                                "systemPlaylists": resultSystem,
-                                "userPlaylists": resultUser,
-                                "viewerPlaylists": [resultViewer],
-                            };
+                            if (resultViewer === null) {
+                                dataTemplate = {
+                                    "systemPlaylists": resultSystem,
+                                    "userPlaylists": resultUser,
+                                };
+                            } else {
+                                dataTemplate = {
+                                    "systemPlaylists": resultSystem,
+                                    "userPlaylists": resultUser,
+                                    "viewerPlaylists": [resultViewer],
+                                };
+                            }
                         }
-                        console.log(dataTemplate, 1);
-                        res.render("index.njk", { dataTemplate:dataTemplate });
+                        res.render("index.njk", { dataTemplate: dataTemplate });
                     });
                 });
             } else {
@@ -74,7 +80,7 @@ class MusicController {
                     }
                 }, (err, rows) => {
                     if (!err) {
-                        if (user == result.author || result.viewer.includes(user)) {
+                        if (user == result.author || result.viewer.includes(user) || result.author == "system") {
                             let permission; // Разрешение на редактирование плейлиста
                             if (result.author == "system" || user !== result.author) {
                                 permission = false;
@@ -82,6 +88,8 @@ class MusicController {
                                 permission = true;
                             }
                             res.render("playlist.njk", { data: rows, id: req.params.id, permission });
+                        } else {
+                            console.log("пиздец");
                         }
                     } else {
                         console.log(err);
@@ -114,7 +122,8 @@ class MusicController {
         } else {
             avatarPath = "media/avatars/default.png";
         }
-        let _status = req.body.status;
+        // let _status = req.body.status;
+        let _status = false;
         let _name = req.body.name;
         let _description = req.body.description;
         let _compositions = req.body.tracks;
