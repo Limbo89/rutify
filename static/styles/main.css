@@ -58,6 +58,7 @@ button {
     padding: 8px;
     font-size: 20px;
     border-radius: 0.25rem;
+    border: solid black 2px;
 }
 
 .playlistText {
@@ -77,6 +78,7 @@ button {
     background-color: rgb(29, 29, 29);
     height: 100%;
     padding: 0% 2%;
+    position: relative;
 }
 
 .container {
@@ -95,11 +97,114 @@ button {
 .playlist {
     margin: 1% 1%;
 }
+
 .playlist>a>img {
     width: 15em;
     height: 15em;
 }
+
 .wrapper {
     display: flex;
     flex: 1 1 30%;
+}
+
+.wrapperPlay {
+    padding: 0 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.audio-track {
+    width: 100%;
+    height: 10px;
+    background-color: #dddddd;
+}
+
+.time {
+    width: 0;
+    height: 10px;
+    background: rgb(116, 116, 116);
+}
+
+.info {
+    padding: 50px;
+    width: 40em;
+    color: black;
+}
+
+.info>form>img {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.content {
+    padding: 50px;
+    width: 40em;
+}
+
+.wrap {
+    display: flex;
+    margin: 1em;
+    justify-content: space-between;
+    background: rgb(68, 216, 103);
+    padding: 5px;
+}
+
+.wrap>img {
+    margin-top: 0.5em;
+    width: 50px;
+    height: 50px;
+}
+
+.trash>img {
+    width: 100%;
+    height: 100%;
+}
+
+.text {
+    margin-top: 0.5em;
+    width: 10em;
+}
+
+.text>p {
+    color: black;
+}
+
+.trash {
+    right: 0px;
+    width: 50px;
+    height: 50px;
+}
+
+.player {
+    position: absolute;
+    width: 100%;
+    height: 6em;
+    background-color: rgb(29, 29, 29);
+    bottom: 0px;
+    left: 0px;
+}
+
+#controls {
+    display: flex;
+}
+
+#controls>button {
+    margin: 10px 5px;
+    width: 60px;
+}
+
+#controls>button>img {
+    width: 100%;
+}
+
+.m {
+    margin-bottom: 30px;
+}
+
+header {
+    padding: 10px 5px;
+    display: flex;
+    justify-content: space-between;
 }

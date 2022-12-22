@@ -51,8 +51,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use((req, res, next) => {
-    // console.log(req.session);
-    let unauth = ['/', '/login', '/registration', '/user/authorization']
+    let unauth = ['/', '/login', '/registration', '/user/authorization', '/user/registration']
     let sess = req.session;
     if (!unauth.includes(req.url) && sess.user) {
         next()

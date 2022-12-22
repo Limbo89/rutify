@@ -7,40 +7,69 @@
         <link rel="stylesheet" href="/styles/main.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+        <script src="/scripts/player.js" defer></script>
         <title>Плейлист</title>
-        <style>
-            .red {
-                color: red;
-            }
-        </style>
     </head>
     <body>
-        {% if permission %}
-            <form action="/music/playlistDelete" method="post">
-                <input type="hidden" value="{{id}}" name="idPlaylist">
-                <button type="submit">Удалить плейлист</button>
-            </form>
-            <form action="" method="get">
-                <button type="submit"></button>
-            </form>
-        {% endif %}
-        {% for track in data %}
-            <hr>
-            <div>
-                <p>{{track.composition}}</p>
-                <img src="/{{track.avatar}}" alt="404">
-                <audio controls>
-                    <source src="/{{track.track}}">
-                </audio>
-                <p>{{track.composer}}</p>
-                {% if permission %}
-                    <form action="/music/playlist/playlistTrack/delete" method="post">
-                        <input type="hidden" value="{{id}}" name="idPlaylist">
-                        <input type="hidden" value="{{track._id}}" name="idTrack">
-                        <button type="submit">удалить композицию</button>
-                    </form>
-                {% endif %}
+        <div class="container">
+            <div class="main">
+                <header>
+                    <h1 class="big_text">
+                        <a href="/">rutify</a>
+                    </h1>
+                    <h1 class="big_text">
+                        <a href="/user/logout">Выйти</a>
+                    </h1>
+                </header>
+                <hr class="m">
+                <h1 align="center">{{ playlist.name }}</h1>
+                <div class="wrapperPlay m">
+                    <div class="info">
+                        {% if permission %}
+                            <form action="/music/playlistDelete" method="post">
+                                <img src="/{{ playlist.avatar }}" alt="картинка плейлиста">
+                                <input type="hidden" value="{{id}}" name="idPlaylist">
+                                <button type="submit">Удалить плейлист</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                    <div class="content">
+                        {% for track in data %}
+                            <form action="/music/playlist/playlistTrack/delete" method="post">
+                                <div class="wrap">
+                                    <img src="/media/avatars/play.png" alt="">
+                                    <div class="text">
+                                        <p class="small_text" >{{track.composition}}</p>
+                                        <input class="src" type="hidden" value="/{{track.track}}">
+                                        <audio id="audio">
+                                            <source src="/{{track.track}}">
+                                        </audio>
+                                        {% if permission %}
+                                            <p class="small_text">{{ track.composer }}</p>
+                                        </div>
+                                        <button class="trash" type="submit">
+                                            <img src="/media/avatars/trash.png" alt="404">
+                                        </button>
+                                        <input type="hidden" value="{{id}}" name="idPlaylist">
+                                        <input type="hidden" value="{{track._id}}" name="idTrack">
+                                    {% endif %}
+                                </div>
+                            </form>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="player">
+                    <div class="audio-track">
+                        <div class="time"></div>
+                    </div>
+                    <div id="controls">
+                        <button class="prev"><img src="/media/avatars/previous.png" alt=""></button>
+                        <button class="play"><img src="/media/avatars/play.png" alt=""></button>
+                        <button class="pause"><img src="/media/avatars/pause-button.png" alt=""></button>
+                        <button class="next"><img src="/media/avatars/next.png" alt=""></button>
+                    </div>
+                </div>
             </div>
-        {% endfor %}
+        </div>
     </body>
 </html>

@@ -87,7 +87,7 @@ class MusicController {
                             } else {
                                 permission = true;
                             }
-                            res.render("playlist.njk", { data: rows, id: req.params.id, permission });
+                            res.render("playlist.njk", { data: rows, id: req.params.id, permission, playlist:result });
                         } else {
                             console.log("пиздец");
                         }
