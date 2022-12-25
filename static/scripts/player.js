@@ -5,12 +5,39 @@ let btnPause = document.querySelector(".pause"); // Берём кнопку па
 let btnPrev = document.querySelector(".prev");   // Берём кнопку переключения предыдущего трека
 let btnNext = document.querySelector(".next");   // Берём кнопку переключение следующего трека
 let inputs = document.querySelectorAll(".src");
+let volume = document.querySelector('.volume_bar');
+let btnPlays = document.querySelectorAll('.playBtn');
 let playlist = [];
 inputs.forEach((element) => {
     playlist.push(element.value);
 })
 let treck; // Переменная с индексом трека
 let coutOfTracks = playlist.length;
+
+btnPlays.forEach((element) => {
+    element.addEventListener('click', () => {
+        let index = playlist.indexOf(element.parentElement.children[1].children[0].children[0].children[0].attributes.src.nodeValue);
+        audioPlay = setInterval(function () {
+        // Получаем значение на какой секунде песня
+        let audioTime = Math.round(audio.currentTime);
+        // Получаем всё время песни
+        let audioLength = Math.round(audio.duration)
+        // Назначаем ширину элементу time
+        time.style.width = (audioTime * 100) / audioLength + '%';
+        // Сравниваем, на какой секунде сейчас трек и всего сколько времени длится
+        // И проверяем что переменная treck меньше длины массива треков
+        if (audioTime == audioLength && treck < coutOfTracks) {
+            treck++; // То Увеличиваем переменную 
+            switchTreck(treck); // Меняем трек
+            // Иначе проверяем тоже самое, но переменная treck больше или равна длины массива треков
+        } else if (audioTime == audioLength && treck >= coutOfTracks) {
+            treck = 0; // То присваиваем treck ноль
+            switchTreck(treck); // Меняем трек
+        }
+    }, 10)
+        switchTreck(index);
+    });
+});
 
 // Событие перед загрузкой страницы
 window.onload = function () {
@@ -37,11 +64,11 @@ btnPlay.addEventListener("click", function () {
         // Назначаем ширину элементу time
         time.style.width = (audioTime * 100) / audioLength + '%';
         // Сравниваем, на какой секунде сейчас трек и всего сколько времени длится
-        // И проверяем что переменная treck меньше четырёх
+        // И проверяем что переменная treck меньше длины массива треков
         if (audioTime == audioLength && treck < coutOfTracks) {
             treck++; // То Увеличиваем переменную 
             switchTreck(treck); // Меняем трек
-            // Иначе проверяем тоже самое, но переменная treck больше или равна четырём
+            // Иначе проверяем тоже самое, но переменная treck больше или равна длины массива треков
         } else if (audioTime == audioLength && treck >= coutOfTracks) {
             treck = 0; // То присваиваем treck ноль
             switchTreck(treck); // Меняем трек
@@ -49,12 +76,16 @@ btnPlay.addEventListener("click", function () {
     }, 10)
 });
 
+volume.addEventListener('input', function () {
+    audio.volume = parseInt(this.value) / 10;
+}, false);
+
 btnPause.addEventListener("click", function () {
     audio.pause(); // Останавливает песню
     clearInterval(audioPlay) // Останавливает интервал
 });
 
-btnPrev.addEventListener("click", function() {
+btnPrev.addEventListener("click", function () {
     // Проверяем что переменная treck больше нуля
     if (treck > 0) {
         treck--; // Если верно, то уменьшаем переменную на один
@@ -65,7 +96,7 @@ btnPrev.addEventListener("click", function() {
     }
 });
 
-btnNext.addEventListener("click", function() {
+btnNext.addEventListener("click", function () {
     // Проверяем что переменная treck больше трёх
     if (treck < coutOfTracks) { // Если да, то
         treck++; // Увеличиваем её на один

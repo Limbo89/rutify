@@ -3,37 +3,70 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="styles/main.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=1300">
+        <link rel="stylesheet" href="/styles/main.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+        <script src="/scripts/player.js" defer></script>
         <title>Создание плейлиста</title>
     </head>
     <body>
-        <form action="/music/playlistCreate" method="post" enctype="multipart/form-data">
-            <label for="avatar">Обложка</label>
-            <input name="avatar" type="file">
-            {# <p>Приватный</p>
+        <div class="container">
+            <div class="player">
+                <div class="audio-track">
+                    <div class="time"></div>
+                </div>
+                <div id="controls">
+                    <button class="prev"><img src="/media/avatars/previous.png" alt=""></button>
+                    <button class="play"><img src="/media/avatars/play.png" alt=""></button>
+                    <button class="pause"><img src="/media/avatars/pause-button.png" alt=""></button>
+                    <button class="next"><img src="/media/avatars/next.png" alt=""></button>
+                    <input class="volume_bar" type="range" min="0" max="10">
+                </div>
+            </div>
+            <div class="main">
+                <form action="/music/playlistCreate" method="post" enctype="multipart/form-data">
+                    <label for="avatar">Обложка</label>
+                    <input name="avatar" type="file">
+                    {# <p>Приватный</p>
             <input name="status" value="true" type="radio">
             <p>Открытый</p>
             <input name="status" value="false" type="radio">
             <br> #}
-            <label for="name">Название</label>
-            <input name="name" type="text" required><br>
-            <label for="description">Описание</label>
-            <input name="description" type="text" required><br>
-            <button type="submit">Создать</button>
-            {% for track in data %}
-                <div>
-                    <p>{{track.composition}}</p>
-                    <img src="/{{track.avatar}}" alt="404">
-                    <audio controls>
-                        <source src="/{{track.track}}">
-                    </audio>
-                    <p>{{track.composer}}</p>
-                    <span>Добавить</span><input type="checkbox" name="tracks" value="{{track._id}}">
-                </div>
-            {% endfor %}
-        </form>
-
+                    <label for="name">Название</label>
+                    <input name="name" class="text_input" type="text" required><br>
+                    <label for="description">Описание</label>
+                    <input name="description" class="text_input" type="text" required><br>
+                    <button type="submit">Создать</button>
+                    {% for track in data %}
+                        <div class="wrap">
+                            <img class="playBtn" src="/media/avatars/play.png" alt="">
+                            <div class="text">
+                                <div class="child">
+                                    <audio id="audio">
+                                        <source src="/{{track.track}}">
+                                    </audio>
+                                </div>
+                                <b>
+                                    <p class="small_text" >{{track.composition}}</p>
+                                </b>
+                                <input class="src" type="hidden" value="/{{track.track}}">
+                                <p class="small_text">{{ track.composer }}</p>
+                            </div>
+                            <input type="checkbox" class="custom-checkbox" name="tracks" value="{{track._id}}">
+                        </div>
+                        {# <div>
+                            <p>{{track.composition}}</p>
+                            <img src="/{{track.avatar}}" alt="404">
+                            <audio controls>
+                                <source src="/{{track.track}}">
+                            </audio>
+                            <p>{{track.composer}}</p>
+                            <span>Добавить</span><input type="checkbox" name="tracks" value="{{track._id}}">
+                        </div> #}
+                    {% endfor %}
+                </form>
+            </div>
+        </div>
     </body>
 </html>
